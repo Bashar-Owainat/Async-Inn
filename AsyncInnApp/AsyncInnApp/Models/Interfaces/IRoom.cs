@@ -1,11 +1,17 @@
-﻿using System;
+﻿using AsyncInnApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace AsyncInnApp.Interfaces
 {
-    interface IRoom
+    public interface IRoom
     {
+        Task<Room> Create(Room room);
+        Task<Room> GetRoom(int id);
+        Task<List<Room>> GetRooms();
+        Task<Room> UpdateRoom(int id, Room room);
+        Task Delete(int id);
     }
 }
