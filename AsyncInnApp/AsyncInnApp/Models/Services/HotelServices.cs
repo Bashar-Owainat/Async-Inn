@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace AsyncInnApp.Models.Services
 {
-    public class HotelServices 
+    public class HotelServices : IHotel
     {
         private readonly AsyncInnDbContext _context;
 
@@ -20,12 +20,47 @@ namespace AsyncInnApp.Models.Services
             _context = context;
         }
 
-        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
+      
+ 
+        public async Task<Hotel> Create (Hotel hotel)
         {
-            return await _context.Hotels.ToListAsync();
+            _context.Entry(hotel).State = EntityState.Added;
+
+           await  _context.SaveChangesAsync();
+            return hotel;
+
         }
 
-       
+
+        public async Task<Hotel> GetHotel(int id)
+        {
+            Hotel hotel = await _context.Hotels.FindAsync(id);
+            return hotel;
+        }
+
+        public async Task<List<Hotel>> GetHotels()
+        {
+            var hotels = await _context.Hotels.ToListAsync();
+            return hotels;
+        }
+
+        public async Task<Hotel> UpdateHotel(int id, Hotel hotel)
+        {
+            _context.Entry(hotel).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return hotel;
+
+
+        }
+
+
+        public async Task Delete(int id)
+        {
+            Hotel hotel = await GetHotel(id);
+            _context.Entry(hotel).State = EntityState.Deleted;
+
+            await _context.SaveChangesAsync();
+        }
 
     }
 }

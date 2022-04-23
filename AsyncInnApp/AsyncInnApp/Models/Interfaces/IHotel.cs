@@ -9,9 +9,9 @@ namespace AsyncInnApp.Interfaces
     public interface IHotel
     {
         Task<Hotel> Create(Hotel hotel);
-        Task<List<Hotel>> GetStudents();
-        Task<Hotel> GetStudent(int id);
-        Task<Hotel> UpdateStudent(int id, Hotel hotel);
+        Task<Hotel> GetHotel(int id);
+        Task<List<Hotel>> GetHotels();
+        Task<Hotel> UpdateHotel(int id, Hotel hotel);
         Task Delete(int id);
     }
 }
