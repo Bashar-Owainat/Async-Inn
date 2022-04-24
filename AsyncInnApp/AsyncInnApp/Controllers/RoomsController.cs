@@ -74,9 +74,12 @@ namespace AsyncInnApp.Controllers
             return NoContent();
         }
 
-        //private bool RoomExists(int id)
+        // Add Amenity to room " api/room/3/1
+        //[HttpPost("{roomId}/{AmenityId}")]
+        //public async Task<ActionResult> AddAmenityToRoom(int roomId, int amenityId)
         //{
-        //    return _room.Rooms.Any(e => e.id == id);
+        //    await _room.AddAmenityToRoom(roomId, amenityId);
+        //    return NoContent();
         //}
     }
 }

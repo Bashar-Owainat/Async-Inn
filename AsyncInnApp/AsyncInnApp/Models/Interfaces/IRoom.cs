@@ -13,5 +13,7 @@ namespace AsyncInnApp.Interfaces
         Task<List<Room>> GetRooms();
         Task<Room> UpdateRoom(int id, Room room);
         Task Delete(int id);
+
+        //Task AddAmenityToRoom(int amenityId, int roomId);
     }
 }
