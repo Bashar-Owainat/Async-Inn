@@ -9,5 +9,8 @@ namespace AsyncInnApp.Models
     {
         public int id { get; set; }
         public string name { get; set; }
+
+        public List<RoomAmenities> RoomAmenities { get; set; }
+
     }
 }

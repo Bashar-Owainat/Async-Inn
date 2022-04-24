@@ -11,5 +11,6 @@ namespace AsyncInnApp.Models
         public string name { get; set; }
         public int layout { get; set; }
 
+        public List<RoomAmenities> RoomAmenities { get; set; }
     }
 }
