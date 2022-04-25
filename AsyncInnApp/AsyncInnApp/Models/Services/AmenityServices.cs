@@ -31,14 +31,26 @@ namespace AsyncInnApp.Models.Services
 
         public async Task<Amenity> GetAmenity(int id)
         {
+            //Amenity amenity = await _context.Amenities.FindAsync(id);
+            //return amenity;
+
             Amenity amenity = await _context.Amenities.FindAsync(id);
+
+            var roomAmenity = await _context.RoomAmenities.Where(x => x.AmenityId == id)
+                                                            .Include(x => x.Room)
+                                                            .ToListAsync();
             return amenity;
+
+
+           // return await _context.Amenities.Include(e => e.RoomAmenities).ThenInclude(c => c.Room).FirstOrDefaultAsync(x => x.id == id);
         }
 
         public async Task<List<Amenity>> GetAmenities()
         {
             var amenities = await _context.Amenities.ToListAsync();
             return amenities;
+
+
         }
 
         public async Task<Amenity> UpdateAmenity(int id, Amenity amenity)
@@ -58,6 +70,8 @@ namespace AsyncInnApp.Models.Services
 
             await _context.SaveChangesAsync();
         }
+
+       
 
     }
 }

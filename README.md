@@ -39,3 +39,11 @@ room table:
 - many rooms can have many amenities
 
 
+## routes
+
+![](route-5.png)
+![](route-6.png)
+![](route-7.png)
+![](route-8.png)
+
+

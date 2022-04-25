@@ -48,6 +48,8 @@ namespace AsyncInnApp.Data
 
           modelBuilder.Entity<RoomAmenities>().HasKey(sc => new { sc.RoomId, sc.AmenityId });
 
+            modelBuilder.Entity<HotelRoom>().HasKey(sc => new { sc.HotelId, sc.RoomId });
+
         }
     }
 }

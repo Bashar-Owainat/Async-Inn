@@ -1,10 +1,9 @@
-﻿using AsyncInnApp.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AsyncInnApp.Interfaces
+namespace AsyncInnApp.Models.Interfaces
 {
     public interface IHotel
     {
@@ -13,5 +12,7 @@ namespace AsyncInnApp.Interfaces
         Task<List<Hotel>> GetHotels();
         Task<Hotel> UpdateHotel(int id, Hotel hotel);
         Task Delete(int id);
+        Task AddRoomToHotel(int roomId, int hotelId);
+
     }
 }

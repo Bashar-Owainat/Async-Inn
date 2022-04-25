@@ -8,7 +8,7 @@ namespace AsyncInnApp.Models
     public class HotelRoom
     {
         public int HotelId {get; set;}
-        public int RoomlId { get; set; }
+        public int RoomId { get; set; }
 
         public int RoomNumber { get; set; }
         public decimal Rate { get; set; }
