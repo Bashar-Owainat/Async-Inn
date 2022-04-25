@@ -31,8 +31,12 @@ namespace AsyncInnApp.Models.Services
 
         public async Task<Room> GetRoom(int id)
         {
-            Room room = await _context.Rooms.FindAsync(id);
-            return room;
+            //Room room = await _context.Rooms.FindAsync(id);
+            //return room;
+
+            return await _context.Rooms.Include(e => e.RoomAmenities)
+                                          .ThenInclude(c => c.Amenity)
+                                          .FirstOrDefaultAsync(x => x.id == id);
         }
 
         public async Task<List<Room>> GetRooms()
@@ -59,20 +63,21 @@ namespace AsyncInnApp.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task AddAmenityToRoom( int roomId, int amenityId)
+        {
+            RoomAmenities roomAmenities = new RoomAmenities
+            {
+                RoomId = roomId,
+                AmenityId = amenityId
 
-        //public async Task AddAmenityToRoom(int amenityId, int roomId)
-        //{
-        //    RoomAmenities roomAmenities = new RoomAmenities
-        //    {
-        //        amenityId = amenityId,
-        //        roomId = roomId
+            };
 
-        //    };
+            _context.Entry(roomAmenities).State = EntityState.Added;
+            await _context.SaveChangesAsync();
 
-        //    _context.Entry(roomAmenities).State = EntityState.Added;
-        //    await _context.SaveChangesAsync();
+        }
 
-        //}
+
 
     }
 }

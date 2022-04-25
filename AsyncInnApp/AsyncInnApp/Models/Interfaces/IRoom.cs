@@ -14,6 +14,6 @@ namespace AsyncInnApp.Interfaces
         Task<Room> UpdateRoom(int id, Room room);
         Task Delete(int id);
 
-        //Task AddAmenityToRoom(int amenityId, int roomId);
+        Task AddAmenityToRoom(int amenityId, int roomId);
     }
 }

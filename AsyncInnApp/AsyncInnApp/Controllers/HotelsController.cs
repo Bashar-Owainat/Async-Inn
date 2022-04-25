@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AsyncInnApp.Data;
 using AsyncInnApp.Models;
 using AsyncInnApp.Interfaces;
+using AsyncInnApp.Models.Interfaces;
 
 namespace AsyncInnApp.Controllers
 {
@@ -73,9 +74,12 @@ namespace AsyncInnApp.Controllers
             return NoContent();
         }
 
-        //private bool HotelExists(int id)
-        //{
-        //    return _hotel.Hotels.Any(e => e.id == id);
-        //}
+        //Add room to hotel 
+        [HttpPost("{hotelId}/{roomId}")]
+        public async Task<ActionResult> AddRoomToHotle(int hotelId, int roomId)
+        {
+            await _hotel.AddRoomToHotel(hotelId, roomId);
+            return NoContent();
+        }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using AsyncInnApp.Models.Interfaces;
 
 namespace AsyncInnApp.Models.Services
 {
@@ -34,8 +34,12 @@ namespace AsyncInnApp.Models.Services
 
         public async Task<Hotel> GetHotel(int id)
         {
-            Hotel hotel = await _context.Hotels.FindAsync(id);
-            return hotel;
+            //Hotel hotel = await _context.Hotels.FindAsync(id);
+            //return hotel;
+
+            return await _context.Hotels.Include(e => e.HotelRooms)
+                                        .ThenInclude(c => c.Room)
+                                        .FirstOrDefaultAsync(x => x.id == id);
         }
 
         public async Task<List<Hotel>> GetHotels()
@@ -62,5 +66,29 @@ namespace AsyncInnApp.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task AddRoomToHotel(int roomId, int hotelId)
+        {
+            HotelRoom hotelRoom = new HotelRoom
+            {
+                RoomId = roomId,
+                HotelId = hotelId
+            };
+
+            _context.Entry(hotelRoom).State = EntityState.Added;
+            await _context.SaveChangesAsync();
+        }
+
+        //public async Task RemoveRoomFromHotel(int roomId, int hotelId)
+        //{
+        //    HotelRoom hotelRoom = await GetHotelRoom();
+
+        //    _context.Entry(hotelRoom).State = EntityState.Added;
+        //    await _context.SaveChangesAsync();
+        //}
+
+        private Task<HotelRoom> GetHotelRoom()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

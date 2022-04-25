@@ -1,5 +1,6 @@
 using AsyncInnApp.Data;
 using AsyncInnApp.Interfaces;
+using AsyncInnApp.Models.Interfaces;
 using AsyncInnApp.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,7 +36,7 @@ namespace AsyncInnApp
                 string connectionString = Configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connectionString);
             });
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddTransient<IHotel, HotelServices>();
             services.AddTransient<IAmenity, AmenityServices>();
             services.AddTransient<IRoom, RoomServices>();

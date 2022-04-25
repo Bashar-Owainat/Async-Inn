@@ -7,10 +7,10 @@ namespace AsyncInnApp.Models
 {
     public class RoomAmenities
     {
-        public int roomId;
+        public int RoomId { get; set; }
+        public Room Room { get; set; }
+        public Amenity Amenity { get; set; }
+        public int AmenityId { get; set; }
 
-        public int amenityId;
-
-      
     }
 }

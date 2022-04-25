@@ -17,5 +17,7 @@ namespace AsyncInnApp.Models
         public string country { set; get; }
         public int phone { set; get; }
 
+        public List<HotelRoom> HotelRooms { get; set; }
+
     }
 }
