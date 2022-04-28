@@ -9,6 +9,7 @@ using AsyncInnApp.Data;
 using AsyncInnApp.Models;
 using AsyncInnApp.Interfaces;
 using AsyncInnApp.Models.Interfaces;
+using AsyncInnApp.Models.DTOs;
 
 namespace AsyncInnApp.Controllers
 {
@@ -33,9 +34,9 @@ namespace AsyncInnApp.Controllers
 
         // GET: api/Hotels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
+        public async Task<ActionResult<HotelDTO>> GetHotel(int id)
         {
-            Hotel hotel = await _hotel.GetHotel(id);
+            HotelDTO hotel = await _hotel.GetHotel(id);
             return Ok(hotel);
         }
 
