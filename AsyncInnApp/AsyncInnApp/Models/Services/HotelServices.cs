@@ -45,7 +45,29 @@ namespace AsyncInnApp.Models.Services
 
             return await _context.Hotels.Select(hotel => new HotelDTO
             {
-                ID = hotel.id
+                ID = hotel.id ,
+                Name = hotel.name,
+                StreetAddress = hotel.streetAddress ,
+                State = hotel.state,
+                City = hotel.city,
+                Phone = hotel.phone, 
+                Rooms = hotel.HotelRooms
+                .Select(item => new HotelRoomDTO
+                {
+                    HotelID = item.HotelId,
+                    RoomID = item.RoomId,
+                    RoomNumber = item.RoomNumber,
+                    Rate = item.Rate,
+                    PetFriendly = item.PetFriendly,
+                    //RoomDTO =
+                    //{
+                    //   ID =  item.Room.id,
+                    //   Name = item.Room.name,
+                    //   Layout = item.Room.layout
+                    //}
+
+
+                }).ToList()
             }).FirstOrDefaultAsync(s => s.ID == id);
 
         }

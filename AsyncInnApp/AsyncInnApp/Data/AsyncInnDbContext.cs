@@ -33,7 +33,7 @@ namespace AsyncInnApp.Data
         {
             modelBuilder.Entity<Hotel>().HasData(
                  new Hotel { id = 1, name = "AsyncInn1", streetAddress = "street a-1", city = "Amman", country = "Jordan", phone = 123, state = "#" },
-                 new Hotel { id = 2, name = "AsyncInn2", streetAddress = "street a-2", city = "Irbid", country = "Jordan", phone = 789, state = "#" },
+                 new Hotel { id = 2, name = "AsyncInn2", streetAddress = "street a-2", city = "Irbid", country = "Jordan", phone = 78, state = "#" },
                  new Hotel { id = 3, name = "AsyncInn3", streetAddress = "street a-3", city = "Madaba", country = "Jordan", phone = 321, state = "#" });
 
             modelBuilder.Entity<Room>().HasData(

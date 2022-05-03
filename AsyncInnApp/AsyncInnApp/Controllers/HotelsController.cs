@@ -65,7 +65,7 @@ namespace AsyncInnApp.Controllers
             Hotel newHotel = await _hotel.Create(hotel);
             return Ok(newHotel);
 
-        }
+        } 
 
         // DELETE: api/Hotels/5
         [HttpDelete("{id}")]
