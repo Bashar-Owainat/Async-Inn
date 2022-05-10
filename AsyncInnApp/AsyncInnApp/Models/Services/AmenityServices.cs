@@ -1,5 +1,6 @@
 ﻿using AsyncInnApp.Data;
 using AsyncInnApp.Interfaces;
+using AsyncInnApp.Models.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -29,20 +30,28 @@ namespace AsyncInnApp.Models.Services
         }
 
 
-        public async Task<Amenity> GetAmenity(int id)
+        public async Task<AmenityDTO> GetAmenity(int id)
         {
             //Amenity amenity = await _context.Amenities.FindAsync(id);
             //return amenity;
 
-            Amenity amenity = await _context.Amenities.FindAsync(id);
+            //Amenity amenity = await _context.Amenities.FindAsync(id);
 
-            var roomAmenity = await _context.RoomAmenities.Where(x => x.AmenityId == id)
-                                                            .Include(x => x.Room)
-                                                            .ToListAsync();
-            return amenity;
+            //var roomAmenity = await _context.RoomAmenities.Where(x => x.AmenityId == id)
+            //                                                .Include(x => x.Room)
+            //                                                .ToListAsync();
+            //return amenity;
 
 
-           // return await _context.Amenities.Include(e => e.RoomAmenities).ThenInclude(c => c.Room).FirstOrDefaultAsync(x => x.id == id);
+
+            // return await _context.Amenities.Include(e => e.RoomAmenities).ThenInclude(c => c.Room).FirstOrDefaultAsync(x => x.id == id);
+
+
+            return await _context.Amenities.Select(amenity => new AmenityDTO
+            {
+                ID = amenity.id,
+                Name = amenity.name
+            }).FirstOrDefaultAsync(a => a.ID == id);
         }
 
         public async Task<List<Amenity>> GetAmenities()
@@ -65,7 +74,7 @@ namespace AsyncInnApp.Models.Services
 
         public async Task Delete(int id)
         {
-            Amenity amenity = await GetAmenity(id);
+            Amenity amenity = await _context.Amenities.FindAsync(id);
             _context.Entry(amenity).State = EntityState.Deleted;
 
             await _context.SaveChangesAsync();

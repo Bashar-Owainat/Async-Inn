@@ -1,5 +1,6 @@
 ﻿using AsyncInnApp.Data;
 using AsyncInnApp.Interfaces;
+using AsyncInnApp.Models.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -29,14 +30,26 @@ namespace AsyncInnApp.Models.Services
         }
 
 
-        public async Task<Room> GetRoom(int id)
+        public async Task<RoomDTO> GetRoom(int id)
         {
             //Room room = await _context.Rooms.FindAsync(id);
             //return room;
 
-            return await _context.Rooms.Include(e => e.RoomAmenities)
-                                          .ThenInclude(c => c.Amenity)
-                                          .FirstOrDefaultAsync(x => x.id == id);
+            //return await _context.Rooms.Include(e => e.RoomAmenities)
+            //                              .ThenInclude(c => c.Amenity)
+            //                              .FirstOrDefaultAsync(x => x.id == id);
+
+            return await _context.Rooms.Select(room => new RoomDTO
+            {
+                ID = room.id,
+                Name = room.name,
+                Layout = room.layout,
+                Amenities = room.RoomAmenities.Select(amenity => new AmenityDTO
+                {
+                    ID = amenity.Amenity.id,
+                    Name = amenity.Amenity.name
+                }).ToList()
+            }).FirstOrDefaultAsync(s => s.ID == id);
         }
 
         public async Task<List<Room>> GetRooms()
@@ -57,9 +70,14 @@ namespace AsyncInnApp.Models.Services
 
         public async Task Delete(int id)
         {
-            Room room = await GetRoom(id);
-            _context.Entry(room).State = EntityState.Deleted;
+            //Room room = await GetRoom(id);
+            //_context.Entry(room).State = EntityState.Deleted;
 
+            //await _context.SaveChangesAsync();
+
+            Room room = await _context.Rooms.FindAsync(id);
+
+            _context.Entry(room).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
 
