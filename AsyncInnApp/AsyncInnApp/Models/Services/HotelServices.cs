@@ -59,12 +59,18 @@ namespace AsyncInnApp.Models.Services
                     RoomNumber = item.RoomNumber,
                     Rate = item.Rate,
                     PetFriendly = item.PetFriendly,
-                    //RoomDTO =
-                    //{
-                    //   ID =  item.Room.id,
-                    //   Name = item.Room.name,
-                    //   Layout = item.Room.layout
-                    //}
+                    Room = new RoomDTO
+                    {
+                        ID = item.Room.id,
+                        Name = item.Room.name,
+                        Layout = item.Room.layout,
+                        Amenities = item.Room.RoomAmenities.Select(item => new AmenityDTO
+                        {
+                            ID = item.Amenity.id,
+                            Name = item.Amenity.name
+                        }).ToList()
+
+                    }
 
 
                 }).ToList()
