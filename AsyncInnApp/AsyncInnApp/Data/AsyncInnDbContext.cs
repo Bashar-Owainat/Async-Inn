@@ -1,4 +1,5 @@
 ﻿using AsyncInnApp.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AsyncInnApp.Data
 {
-    public class AsyncInnDbContext : DbContext
+    public class AsyncInnDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }
@@ -16,6 +17,8 @@ namespace AsyncInnApp.Data
         public DbSet<RoomAmenities> RoomAmenities { get; set; }
        
         public DbSet<HotelRoom> HotelRooms { get; set; }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         public AsyncInnDbContext(DbContextOptions options) : base(options)
         {
@@ -31,6 +34,8 @@ namespace AsyncInnApp.Data
         //public int phone { set; get; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Hotel>().HasData(
                  new Hotel { id = 1, name = "AsyncInn1", streetAddress = "street a-1", city = "Amman", country = "Jordan", phone = 123, state = "#" },
                  new Hotel { id = 2, name = "AsyncInn2", streetAddress = "street a-2", city = "Irbid", country = "Jordan", phone = 78, state = "#" },
