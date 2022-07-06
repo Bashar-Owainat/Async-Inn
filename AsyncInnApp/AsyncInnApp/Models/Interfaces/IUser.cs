@@ -9,7 +9,8 @@ namespace AsyncInnApp.Models.Interfaces
 {
    public interface IUser
     {
-         Task<ApplicationUser> Register(RegisterDTO registerDto, ModelStateDictionary modelstate);
+        public Task<ApplicationUser> Register(RegisterDTO registerDto, ModelStateDictionary modelstate);
         public Task<UserDTO> Login(LogInDTO logInDTO, ModelStateDictionary modelState);
+        public Task Logout();
     }
 }

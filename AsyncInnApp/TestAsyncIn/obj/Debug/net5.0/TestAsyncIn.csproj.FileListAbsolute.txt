@@ -1,0 +1,6 @@
+C:\Users\LEGION\source\repos\Bashar-Owainat\Async-Inn\AsyncInnApp\TestAsyncIn\bin\Debug\net5.0\CoverletSourceRootsMapping
+C:\Users\LEGION\source\repos\Bashar-Owainat\Async-Inn\AsyncInnApp\TestAsyncIn\obj\Debug\net5.0\TestAsyncIn.csproj.AssemblyReference.cache
+C:\Users\LEGION\source\repos\Bashar-Owainat\Async-Inn\AsyncInnApp\TestAsyncIn\obj\Debug\net5.0\TestAsyncIn.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\LEGION\source\repos\Bashar-Owainat\Async-Inn\AsyncInnApp\TestAsyncIn\obj\Debug\net5.0\TestAsyncIn.AssemblyInfoInputs.cache
+C:\Users\LEGION\source\repos\Bashar-Owainat\Async-Inn\AsyncInnApp\TestAsyncIn\obj\Debug\net5.0\TestAsyncIn.AssemblyInfo.cs
+C:\Users\LEGION\source\repos\Bashar-Owainat\Async-Inn\AsyncInnApp\TestAsyncIn\obj\Debug\net5.0\TestAsyncIn.csproj.CoreCompileInputs.cache

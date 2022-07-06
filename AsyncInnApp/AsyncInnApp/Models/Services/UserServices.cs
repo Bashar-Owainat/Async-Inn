@@ -13,11 +13,13 @@ namespace AsyncInnApp.Models.Services
     {
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
+        private RoleManager<IdentityRole> _roleManager;
 
-        public UserServices(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public UserServices(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         public async Task<UserDTO> Login(LogInDTO logInDTO, ModelStateDictionary modelState)
@@ -71,6 +73,11 @@ namespace AsyncInnApp.Models.Services
                 }
                 return null;
             }
+        }
+
+        public async Task Logout()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }
