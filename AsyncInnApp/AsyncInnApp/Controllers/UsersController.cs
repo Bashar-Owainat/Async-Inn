@@ -61,10 +61,12 @@ namespace AsyncInnApp.Controllers
 
         }
 
-        [HttpGet("Login")]
-        public async Task<ActionResult> Login()
+        [HttpPost("Logout")]
+        public async Task<ActionResult> Logout()
         {
-            return Ok("Login Page");
+            await _user.Logout();
+            return Content("Logged out");
         }
+
     }
 }
