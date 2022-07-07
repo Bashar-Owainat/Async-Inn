@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AsyncInnApp.Models.Services
@@ -14,12 +15,14 @@ namespace AsyncInnApp.Models.Services
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
         private RoleManager<IdentityRole> _roleManager;
+        private JwtTokenService tokenService;
 
-        public UserServices(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public UserServices(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, JwtTokenService jwtTokenService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            tokenService = jwtTokenService;
         }
 
         public async Task<UserDTO> Login(LogInDTO logInDTO, ModelStateDictionary modelState)
@@ -46,7 +49,7 @@ namespace AsyncInnApp.Models.Services
             return null;
         }
 
-        public async Task<ApplicationUser> Register(RegisterDTO registerDto, ModelStateDictionary modelstate)
+        public async Task<UserDTO> Register(RegisterDTO registerDto, ModelStateDictionary modelstate)
         {
             var user = new ApplicationUser
             {
@@ -58,7 +61,17 @@ namespace AsyncInnApp.Models.Services
 
             if (result.Succeeded)
             {
-                return user;
+               
+                IList<string> Roles = new List<string>();
+                Roles.Add("user");
+                await _userManager.AddToRolesAsync(user, Roles);
+
+                return new UserDTO
+                {
+                    Username = user.UserName,
+                    Token = await tokenService.GetToken(user, System.TimeSpan.FromDays(2)),
+                    Roles = await _userManager.GetRolesAsync(user)
+                };
             }
             else
             {
@@ -78,6 +91,32 @@ namespace AsyncInnApp.Models.Services
         public async Task Logout()
         {
             await _signInManager.SignOutAsync();
+        }
+
+        public async Task<UserDTO> Authenticate(string username, string password)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+
+            if (await _userManager.CheckPasswordAsync(user, password))
+            {
+                return new UserDTO
+                {
+                    Username = user.UserName,
+                    Token = await tokenService.GetToken(user, System.TimeSpan.FromDays(2)),
+                    Roles = await _userManager.GetRolesAsync(user)
+                };
+            }
+
+            return null;
+        }
+
+        public async Task<UserDTO> GetUser(ClaimsPrincipal principal)
+        {
+            var user = await _userManager.GetUserAsync(principal);
+            return new UserDTO
+            {
+                Username = user.UserName
+            };
         }
     }
 }

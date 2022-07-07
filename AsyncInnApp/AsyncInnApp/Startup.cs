@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +57,27 @@ namespace AsyncInnApp
             services.AddTransient<IRoom, RoomServices>();
             services.AddTransient<IUser, UserServices>();
             services.AddTransient<IHotelRoom, HotelRoomServices>();
+            services.AddScoped<JwtTokenService>();
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+  .AddJwtBearer(options =>
+  {
+       // Tell the authenticaion scheme "how/where" to validate the token + secret
+       options.TokenValidationParameters = JwtTokenService.GetValidationParameters(Configuration);
+  });
+
+            services.AddAuthorization(options =>
+            {
+                // Add "Name of Policy", and the Lambda returns a definition
+                options.AddPolicy("create", policy => policy.RequireClaim("permissions", "create"));
+                options.AddPolicy("update", policy => policy.RequireClaim("permissions", "update"));
+                options.AddPolicy("delete", policy => policy.RequireClaim("permissions", "delete"));
+            });
 
             services.AddControllers();
 
